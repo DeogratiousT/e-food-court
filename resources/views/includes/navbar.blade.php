@@ -15,11 +15,11 @@
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="{{ route('login') }}">SIGN IN</a>
                     </li>
-                    {{-- @if (Route::has('register'))
+                    @if (Route::has('register'))
                         <li class="nav-item">
                             <a class="nav-link js-scroll-trigger" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
-                    @endif --}}
+                    @endif
                 @else
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('customers.orders.index',['customer'=>Auth::user()]) }}">MY Orders</a></li>
                         
@@ -29,8 +29,10 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
-                            <div class="dropdown-divider"></div>
+                            @if (Auth::user()->inRole(['administrator']))
+                                <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                                <div class="dropdown-divider"></div>
+                            @endif
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
