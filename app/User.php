@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role_id'
     ];
 
     /**
@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function dishes()
+    {
+        return $this->hasMany('App\Models\Dish');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    }
+
+    public function inRole(Array $roleSlugs)
+    {
+        return $this->role->hasRole($roleSlugs);
+    }
 }

@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ml-auto">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('home') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('home') }}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('dishes.index') }}">Dishes</a></li>
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
@@ -21,13 +21,15 @@
                         </li>
                     @endif --}}
                 @else
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('customers.orders.index',['customer'=>Auth::user()]) }}">MY Orders</a></li>
+                        
                     <li class="nav-item dropdown ml-4">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a href="" class="dropdown-item">Dashboard</a>
+                            <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
