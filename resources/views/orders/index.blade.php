@@ -24,8 +24,8 @@
             @foreach ($orders as $order)        
                 <tr>
                     <td>{{ $order->number }}</td>
-                    <td>{{ (isset($order->dish_id)) ? $order->dish->name : $order->custom_name }}</td>
-                    <td>{{ $order->cost }}</td>
+                    <td>{{ (isset($order->dish_id) ? $order->dish->name : $order->custom_name) }}</td>
+                    <td>{{ (isset($order->dish_id) ? $order->dish->cost : null) }}</td>
                     <td>{{ $order->status }}</td>
                 </tr>            
             @endforeach 
