@@ -1,6 +1,6 @@
 ## Requirements
 
-- PHP version 7.3
+- PHP version 7.4.14
 
 ## Project Setup
 Make sure you have fulfilled all the above requirements.
