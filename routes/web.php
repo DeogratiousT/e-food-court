@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
     Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::resource('customers','CustomerController');
     Route::resource('dishes','DishController');
