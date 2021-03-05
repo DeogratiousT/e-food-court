@@ -25,5 +25,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customers','CustomerController');
     Route::resource('dishes','DishController');
     Route::resource('customers.orders','OrderController');
+    Route::resource('orders','AdminOrderController');
     Route::get('custom-order','HomeController@dashboard');
 });

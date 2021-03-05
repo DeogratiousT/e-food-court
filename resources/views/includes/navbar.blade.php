@@ -21,7 +21,11 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('customers.orders.index',['customer'=>Auth::user()]) }}">MY Orders</a></li>
+                    @if (Auth::user()->inRole(['administrator']))
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('orders.index') }}">Orders</a></li>
+                    @else
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('customers.orders.index',['customer'=>Auth::user()]) }}">MY Orders</a></li>
+                    @endif
                         
                     <li class="nav-item dropdown ml-4">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

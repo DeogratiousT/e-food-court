@@ -28,9 +28,9 @@ class DishController extends Controller
      */
     public function index()
     { 
-        $availableDishes = Dish::where('available',true)->orderBy('name','desc')->paginate(12);
+        $dishes = Dish::where('available',true)->orderBy('name','desc')->paginate(12);
         
-        return view('dishes.index',['availableDishes'=>$availableDishes]);
+        return view('dishes.index',['dishes'=>$dishes]);
         
     }
 
@@ -99,13 +99,13 @@ class DishController extends Controller
     {
         // $dish = Dish::Find($id);
         
-        if($dish->isAvailable($dish)){
-            return view('dishes.show',['dish'=>$dish]);
-        }else{
-            if($this->authorize('view', $dish)){
-                return view('dishes.show',['dish'=>$dish]);
-            }
-        }
+        // if($dish->isAvailable($dish)){
+        //     return view('dishes.show',['dish'=>$dish]);
+        // }else{
+        //     if($this->authorize('view', $dish)){
+        //         return view('dishes.show',['dish'=>$dish]);
+        //     }
+        // }
     }
 
     /**
@@ -135,14 +135,10 @@ class DishController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'ingredients' => 'required',
-            'cover_image' => 'nullable'
+            'cover_image' => 'required|image',
+            'cost' => 'required',
+            'available' => 'required',
         ]);
-
-        
-        //Update dish
-        // $dish = Dish::find($id);
-
-        // $this->authorize('update',$dish);
 
         if($request->hasFile('cover_image')) {
             //get filename with extension
@@ -158,22 +154,26 @@ class DishController extends Controller
             $filenametostore = $filename.'_'.time().'.'.$extension;
       
             //Upload File
-            $request->file('cover_image')->storeAs('cover images', $filenametostore, 's3');
+            $request->file('cover_image')->storeAs('cover images', $filenametostore , 'public');
         }
-
-        $dish->name = $request->input('name');
-        $dish->ingredients = $request->input('ingredients');  
         
+        //Edit dish
+        $dish->name = $request->name;
+        $dish->ingredients = $request->ingredients;
+        $dish->cost = $request->cost;
+        $dish->available = ($request->available == "true" ? true : false);
+
         if($request->hasFile('cover_image')){
             //delete first image
             Storage::disk('public')->delete('cover images/'.$dish->cover_image); 
 
             $dish->cover_image = $filenametostore;  
 
-        }        
+        }
+
         $dish->save();
         
-        return redirect()->route('dishes.show',$dish)->with('success','Dish Updated');
+        return redirect()->route('dishes.index')->with('success','Dish Updated');
     }
 
     /**

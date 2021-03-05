@@ -1,48 +1,65 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('content')
-<form action="{{ route('posts.update',$post) }}" method="POST" enctype="multipart/form-data">
+@section('main-content')
+<form action="{{ route('dishes.update',$dish) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
+
     <div class="form-group">
-        <label for="name">Title</label>
-        <input class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}" type="text" id="title" name="title" value="{{ $post->title }}" required>
-        @if ($errors->has('title'))
+    <label for="name">Dish Name</label>
+        <input class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" type="text" id="name" name="name" value="{{ $dish->name }}" required>
+        @if ($errors->has('name'))
             <span class="invalid-feedback" role="alert">
-                {{ $errors->first('title') }}
+                {{ $errors->first('name') }}
             </span>
         @endif
     </div>
 
     <div class="form-group">
-        <label for="description">Body</label>
-        <textarea class="form-control {{ $errors->has('body') ? ' is-invalid' : '' }}" id="body" name="body">{{ $post->body }}</textarea>
-        @if ($errors->has('body'))
+        <label for="ingredients">Ingredients</label>
+        <textarea class="form-control {{ $errors->has('ingredients') ? ' is-invalid' : '' }}" id="ingredients" name="ingredients" placeholder="Post Body">{!! $dish->ingredients !!}</textarea>
+        @if ($errors->has('ingredients'))
             <span class="invalid-feedback" role="alert">
-                {{ $errors->first('body') }}
+                {{ $errors->first('ingredients') }}
             </span>
         @endif
 
-        <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+        <script src="{{ asset('ckeditor/ckeditor/ckeditor.js') }}"></script>
         <script>
-            CKEDITOR.replace( 'body', {
-                filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-                filebrowserUploadMethod: 'form'
-            });
+            CKEDITOR.replace( 'ingredients' );
         </script>
 
     </div>
 
     <div class="form-group">
-        <label for="images">Cover Image</label>
-        {{-- <br>
-            <div class="flex-column p-3">
-                <img src="storage/cover images/{{ $post->cover_image }}" alt="{{ $post->name }}" style="height: 100px">
-            </div> --}}
+        <label for="cost">Unit Cost</label>
+        <input class="form-control {{ $errors->has('cost') ? ' is-invalid' : '' }}" type="number" id="cost" name="cost" value="{{ $dish->cost }}" required>
+        @if ($errors->has('cost'))
+            <span class="invalid-feedback" role="alert">
+                {{ $errors->first('cost') }}
+            </span>
+        @endif
+    </div>
+
+    <div class="form-group">
+        <label for="cover_image">Cover Image</label>
         <input class="form-control {{ $errors->has('cover_image') ? ' is-invalid' : '' }}" type="file" id="cover_image" name="cover_image">
         @if ($errors->has('cover_image'))
             <span class="invalid-feedback" role="alert">
                 {{ $errors->first('cover_image') }}
+            </span>
+        @endif
+    </div>
+
+    <div class="form-group">
+        <label for="available">Status</label>
+        <select class="form-control {{ $errors->has('available') ? ' is-invalid' : '' }}" id="available" name="available">
+            <option @if ($dish->available == true) selected @endif value="true">available</option>
+            <option @if ($dish->available == false) selected @endif value="false">Un-available</option>
+        </select>
+        @if ($errors->has('available'))
+            <span class="invalid-feedback" role="alert">
+                {{ $errors->first('available') }}
             </span>
         @endif
     </div>
