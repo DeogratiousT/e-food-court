@@ -30,7 +30,11 @@ class DishController extends Controller
     { 
         $dishes = Dish::where('available',true)->orderBy('name','desc')->paginate(12);
         
-        return view('dishes.index',['dishes'=>$dishes]);
+        $unavailabledishes = Dish::where('available',false)->get()->count();
+
+        $availabledishes = Dish::where('available',true)->get()->count();
+
+        return view('dishes.index',['dishes'=>$dishes, 'unavailabledishes'=>$unavailabledishes, 'availabledishes'=>$availabledishes]);
         
     }
 

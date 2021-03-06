@@ -27,4 +27,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customers.orders','OrderController');
     Route::resource('orders','AdminOrderController');
     Route::get('custom-order','HomeController@dashboard');
+
+    Route::get('unavailable-dishes','DishOrderFunctionsController@unavailableDishes')->name('unavailable-dishes');
 });

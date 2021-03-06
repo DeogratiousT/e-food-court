@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Laratables\UsersLaratables;
+use App\Laratables\CustomersLaratables;
 use Freshbitsweb\Laratables\Laratables;
 
 
@@ -28,10 +28,10 @@ class CustomerController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return Laratables::recordsOf(User::class, UsersLaratables::class);
+            return Laratables::recordsOf(User::class, CustomersLaratables::class);
         }
 
-        return view('users.index');
+        return view('customers.index');
     }
 
     /**

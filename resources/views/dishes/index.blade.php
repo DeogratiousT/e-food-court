@@ -2,10 +2,16 @@
 
 @section('main-content')
     <div class="float-left">
-        <h3>@isset($unavailable) Unavailable &nbsp; @endisset Dishes</h3>
+        <h3>@isset($unavailable) Unavailable @endisset Dishes</h3>
     </div>
     <div class="float-right">
         @if (Auth::user()->inRole(['administrator']))
+            @isset($unavailable)
+                <a href="{{ route('dishes.index') }}" class="btn btn-primary">Available Dishes <span class="badge badge-light">{{ $availabledishes }}</span></a>
+            @else
+                <a href="{{ route('unavailable-dishes') }}" class="btn btn-primary">Unavailable Dishes <span class="badge badge-light">{{ $unavailabledishes }}</span></a>
+            @endisset
+        
             <a href="{{ route('dishes.create') }}" class="btn btn-primary"><span><i class="mdi mdi-plus-circle"></i></span>&nbsp; Add Dish</a>
         @else 
             <a href="{{ route('customers.orders.create',['customer'=>Auth::user()]) }}" class="btn btn-primary"><span><i class="mdi mdi-plus-circle"></i></span>&nbsp; Make Custom Order</a>

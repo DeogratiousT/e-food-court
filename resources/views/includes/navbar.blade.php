@@ -23,6 +23,7 @@
                 @else
                     @if (Auth::user()->inRole(['administrator']))
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('orders.index') }}">Orders</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('customers.index') }}">Customers</a></li>
                     @else
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('customers.orders.index',['customer'=>Auth::user()]) }}">MY Orders</a></li>
                     @endif
