@@ -72,9 +72,10 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id, Order $order)
     {
-        //
+        $customer = User::find($id);
+        return view('orders.edit',['order'=>$order, 'user'=>$customer]);
     }
 
     /**
@@ -84,9 +85,16 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id, Order $order)
     {
-        //
+        $customer = User::find($id);
+
+        $order->update($request->validate([
+            'destination' => 'required',
+            'number_of_packages' => 'required',
+        ]));       
+
+        return redirect()->route('customers.orders.index',['customer'=>$customer])->with('success','Order Editted Successfully');
     }
 
     /**

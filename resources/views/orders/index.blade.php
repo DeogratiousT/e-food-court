@@ -17,7 +17,7 @@
                     <tr>
                         <th scope="col">Number</th>
                         <th scope="col">Dish</th>
-                        <th scope="col">Cost</th>
+                        <th scope="col">Total Cost</th>
                         <th scope="col">Destination</th>
                         <th scope="col">Served For:</th>
                         <th scope="col">Status</th>
@@ -30,7 +30,7 @@
                         <tr>
                             <td>{{ $order->number }}</td>
                             <td>{{ (isset($order->dish_id) ? $order->dish->name : $order->custom_name) }}</td>
-                            <td>{{ (isset($order->dish_id) ? $order->dish->cost : $order->custom_cost) }}</td>
+                            <td>{{ (isset($order->dish_id) ? $order->dish->cost * $order->number_of_packages : $order->custom_cost * $order->number_of_packages) }}</td>
                             <td>{{ (isset($order->destination) ? $order->destination : $order->customer->location) }}</td>
                             <th>{{ $order->number_of_packages }}</th>
                             <td>
@@ -49,7 +49,7 @@
                             </td>
                             <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY') }}</th>
                                 @if ($order->status == "ordered" || $order->status == "processing")
-                                    <td><a href="{{ route('orders.edit',$order) }}" class="action-icon" data-toggle="tooltip" data-placement="bottom" title="Edit Order"><i class="mdi mdi-square-edit-outline"></i></a></td>
+                                    <td><a href="{{ route('customers.orders.edit',['customer'=>Auth::user(), 'order'=>$order]) }}" class="action-icon" data-toggle="tooltip" data-placement="bottom" title="Edit Order"><i class="mdi mdi-square-edit-outline"></i></a></td>
                                 @endif
                         </tr>            
                     @endforeach 
