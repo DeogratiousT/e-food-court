@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('number');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('dish_id')->nullable();
-            $table->integer('number_of_packages')->nullable();
+            $table->integer('number_of_packages')->default(1);
             $table->integer('total_cost')->nullable();
             $table->longText('custom_ingredients')->nullable();
             $table->timestamps();
