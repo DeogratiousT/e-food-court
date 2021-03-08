@@ -16,6 +16,7 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">Number</th>
+                            <th scope="col">Customer</th>
                             <th scope="col">Dish</th>
                             <th scope="col">Total Cost</th>
                             <th scope="col">Destination</th>
@@ -29,6 +30,7 @@
                         @foreach ($orders as $order)        
                             <tr>
                                 <td>{{ $order->number }}</td>
+                                <td>{{ $order->customer->name }}</td>
                                 <td>{{ $order->dish->name }}</td>
                                 <td>{{ $order->dish->cost * $order->number_of_packages }}</td>
                                 <td>{{ (isset($order->destination) ? $order->destination : $order->customer->location) }}</td>
@@ -47,7 +49,7 @@
                                         <span class="badge badge-success">{{ $order->status }}</span>
                                     @endif
                                 </td>
-                                <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY') }}</th>
+                                <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY h:mm a') }}</th>
                                 <td><a href="{{ route('orders.edit',['order'=>$order]) }}" class="action-icon" data-toggle="tooltip" data-placement="bottom" title="Edit Order"><i class="mdi mdi-square-edit-outline"></i></a></td>
                                     
                             </tr>            
@@ -65,6 +67,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Number</th>
+                        <th scope="col">Customer</th>
                         <th scope="col">Dish</th>
                         <th scope="col">Total Cost</th>
                         <th scope="col">Destination</th>
@@ -78,6 +81,7 @@
                     @foreach ($customOrders as $order)        
                         <tr>
                             <td>{{ $order->number }}</td>
+                            <td>{{ $order->customer->name }}</td>
                             <td>{{ $order->custom_name }}</td>
                             <td>{{ $order->custom_cost * $order->number_of_packages }}</td>
                             <td>{{ (isset($order->destination) ? $order->destination : $order->customer->location) }}</td>
@@ -96,7 +100,7 @@
                                     <span class="badge badge-success">{{ $order->status }}</span>
                                 @endif
                             </td>
-                            <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY') }}</th>
+                            <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY h:mm a') }}</th>
                             <td><a href="{{ route('orders.edit',['order'=>$order]) }}" class="action-icon" data-toggle="tooltip" data-placement="bottom" title="Edit Order"><i class="mdi mdi-square-edit-outline"></i></a></td>
 
                         </tr>            

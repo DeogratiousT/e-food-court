@@ -47,7 +47,7 @@
                                     <span class="badge badge-success">{{ $order->status }}</span>
                                 @endif
                             </td>
-                            <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY') }}</th>
+                            <th>{{ Carbon\Carbon::parse($order->created_at)->isoFormat('Do MMM  YYYY h:mm a') }}</th>
                                 @if ($order->status == "ordered" || $order->status == "processing")
                                     <td><a href="{{ route('customers.orders.edit',['customer'=>Auth::user(), 'order'=>$order]) }}" class="action-icon" data-toggle="tooltip" data-placement="bottom" title="Edit Order"><i class="mdi mdi-square-edit-outline"></i></a></td>
                                 @endif

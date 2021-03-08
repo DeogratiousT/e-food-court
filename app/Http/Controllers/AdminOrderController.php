@@ -75,7 +75,20 @@ class AdminOrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        
+        $order->status = $request->status;
+
+        if (isset($request->custom_cost)) {
+            $request->validate([
+                'custom_cost' => 'required',
+            ]);
+
+            $order->custom_cost = $request->custom_cost;
+        }
+
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success','Order State Updated Successfully');
     }
 
     /**

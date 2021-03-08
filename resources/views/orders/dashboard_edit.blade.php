@@ -8,24 +8,31 @@
     <h3>Edit Order</h3> <br>
 
     <div class="form-group">
-        <label for="destination">Delivery Location</label>
-        <input class="form-control {{ $errors->has('destination') ? ' is-invalid' : '' }}" type="text" id="destination" name="destination" value="{{ isset($order->destination) ? $order->destination : $order->customer->location  }}" required>
-        @if ($errors->has('destination'))
+        <label for="status">Status</label>
+        <select class="form-control {{ $errors->has('status') ? ' is-invalid' : '' }}" id="status" name="status">
+            <option @if ($order->status == "ordered") selected @endif value="ordered">Ordered</option>
+            <option @if ($order->status == "processing") selected @endif value="processing">Processing</option>
+            <option @if ($order->status == "dispatched") selected @endif value="dispatched">Dispatched</option>
+            <option @if ($order->status == "delivered") selected @endif value="delivered">Delivered</option>
+        </select>
+        @if ($errors->has('status'))
             <span class="invalid-feedback" role="alert">
-                {{ $errors->first('destination') }}
+                {{ $errors->first('status') }}
             </span>
         @endif
     </div>
 
-    <div class="form-group">
-        <label for="number_of_packages">Number of Packages</label>
-        <input class="form-control {{ $errors->has('number_of_packages') ? ' is-invalid' : '' }}" type="integer" id="number_of_packages" name="number_of_packages" value="{{ $order->number_of_packages }}" required>
-        @if ($errors->has('number_of_packages'))
-            <span class="invalid-feedback" role="alert">
-                {{ $errors->first('number_of_packages') }}
-            </span>
-        @endif
-    </div>
+    @if (!isset($order->dish->cost) && $order->custom_cost == null)
+        <div class="form-group">
+            <label for="custom_cost">Order Unit Cost</label>
+            <input class="form-control {{ $errors->has('custom_cost') ? ' is-invalid' : '' }}" type="integer" id="custom_cost" name="custom_cost" value="{{ isset($order->dish->cost) ? $order->dish->cost : $order->custom_cost }}" required>
+            @if ($errors->has('custom_cost'))
+                <span class="invalid-feedback" role="alert">
+                    {{ $errors->first('custom_cost') }}
+                </span>
+            @endif
+        </div>
+    @endif
 
     <div class="form-group mb-0 text-center">
         <button class="btn btn-primary btn-block" type="submit">
