@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Dish;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminOrderController extends Controller
@@ -13,8 +15,12 @@ class AdminOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {                
+        $customOrders = Order::where('dish_id',null)->orderBy('created_at','DESC')->get();
+        
+        $orders = Order::where('custom_name',null)->orderBy('created_at','DESC')->get();
+
+        return view('orders.dashboard',['orders'=>$orders, 'customOrders'=>$customOrders]);
     }
 
     /**
@@ -57,7 +63,7 @@ class AdminOrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('orders.dashboard_edit',['order'=>$order]);
     }
 
     /**
